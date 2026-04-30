@@ -292,3 +292,13 @@
 
 > **[ CARDINAL ]** GitHub Actions により自動ビルド（`.github/workflows/build.yml`）。
 > Push を契機に自動実行される。Artifacts から `.uf2` ファイルをダウンロードし、デバイスへ書き込むことで起動が完了する。
+
+══════════════════════════════════════════════
+
+## ◆ SYSTEM LOG ── 変更履歴
+
+*アンダーワールドを揺らした全ての改修記録。フラクトライトの記憶に刻まれる軌跡。*
+
+| DATE | ENTRY |
+|---|---|
+| 2026-04-30 | 〈Repository Purge〉— 不要アーティファクト整理: code-workspace 重複パス削除、孤児スクリプト `reorder_keymap.py` 退役、`mouse-gesture.local.dtsi` → `mouse-gesture.dtsi` 改名、`.gitignore` に Python/エディタ系除外を追加 |

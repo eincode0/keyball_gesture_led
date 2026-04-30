@@ -5,7 +5,7 @@
  * include パス / ZMK_POINTING スクロール値 / 基礎 behavior 設定を担う。
  * ============================================================ */
 
-#include "../dts/mouse-gesture.local.dtsi"
+#include "../dts/mouse-gesture.dtsi"
 #include <dt-bindings/zmk/mouse.h>
 #include <zmk-helpers/helper.h>              /* ⑦ zmk-helpers: ZMK_COMBO 等のマクロ */
 #include <behaviors.dtsi>
