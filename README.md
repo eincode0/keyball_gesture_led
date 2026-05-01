@@ -313,12 +313,91 @@
 
 ══════════════════════════════════════════════
 
+## ◆ MULTI-NODE PROTOCOL ── 他PC上のClaude Codeでの運用
+
+*同期されたフラクトライトは、どのSTLからログインしても同じ規律で稼働する。プロトコルは完全に共有される。*
+
+リポジトリ内に `CLAUDE.md`（作業ルール）と `README.md`（仕様書）が含まれているため、どのPCで Claude Code を起動しても **自動的に同じルールで動作する**。
+
+──────────────────────────────────────────────
+
+### ◆ INITIAL DIVE ── 他PCでの初回セットアップ手順
+
+*新しい端末への初回ダイブ。複製ノードを整理し、正規パスへ統合する。*
+
+そのPCにClaude Codeで入って、以下を順に実行（または指示）：
+
+**Step 1：複製ノード調査**
+```bash
+find ~ -maxdepth 7 -type d -iname "Release_Recollection*" 2>/dev/null
+```
+
+**Step 2：既存リポジトリの未保存作業を確認**
+見つかった各 Release_Recollection について：
+```bash
+cd <パス>
+git status
+git stash list
+git log origin/main..HEAD
+```
+未push/未commit があれば先に push して保護。
+
+**Step 3：正規パス以外を退避**
+```bash
+mv <旧パス> <旧パス>.OLD_$(date +%Y%m%d)
+```
+
+**Step 4：正規パスへ clone**
+```bash
+mkdir -p ~/Documents/GitHub
+cd ~/Documents/GitHub
+git clone https://github.com/eincode0/Release_Recollection.git
+```
+
+**Step 5：Claude Codeを正規パスで起動**
+```bash
+cd ~/Documents/GitHub/Release_Recollection
+claude
+```
+
+──────────────────────────────────────────────
+
+### ◆ DAILY DIVE ── 日常作業フロー（全PC共通）
+
+*毎回のダイブ手順。pull で最新の世界線へ同期し、push で記憶を刻む。*
+
+```bash
+cd ~/Documents/GitHub/Release_Recollection
+git pull              # ← 編集前に必ず
+# Claude Code で編集・コミット
+git push              # ← 編集後に必ず
+```
+
+──────────────────────────────────────────────
+
+### ◆ FALLBACK INVOCATION ── 他PCでこのタスクを再実行する場合
+
+別PCで同じ整理を行う場合、Claude Codeに以下のように指示するだけで十分：
+
+> 「`Release_Recollection_NEW_PC_SETUP.md` の **PC MIGRATION CHECKLIST** に従って、このPC上のRelease_Recollectionを整理して。複製ノードを退避して、`~/Documents/GitHub/Release_Recollection` に統一したい」
+
+`Release_Recollection_NEW_PC_SETUP.md` は GitHub には push していない（リポジトリ外に作成済み）ため、必要なら**他PCにも同じ手順書を渡す**か、**今回の手順をそのまま指示**すればよい。
+
+──────────────────────────────────────────────
+
+> **[ CARDINAL ]** Claude Code 自体は各PCで個別にインストール・認証が必要だが、
+> **プロジェクト固有のルール（CLAUDE.md）は git で共有される**。
+> どのノードからログインしても、〈Cardinal〉は同じ規律で稼働する。
+
+══════════════════════════════════════════════
+
 ## ◆ SYSTEM LOG ── 更新履歴
 
 *カーディナルシステムの変更軌跡。刻まれた決定と解放された力の記録。*
 
 | DATE | ENTRY |
 |---|---|
+| 2026-05-01 | 〈Multi-Node Protocol〉— README に〈MULTI-NODE PROTOCOL〉セクションを追加。複数PC上で Claude Code を運用するための初回セットアップ手順・日常作業フロー・フォールバック呼出を文書化。`CLAUDE.md` がリポジトリに含まれるため、どのノードからログインしてもカーディナルは同じ規律で稼働する。 |
 | 2026-05-01 | 〈Timeout Re-extend〉— `CONFIG_BT_PERIPHERAL_PREF_TIMEOUT` を 600 → 1000 に再延長。〈BLE Tuning Revert〉で 600ms に戻していたが再度 1000ms へ。 |
 | 2026-05-01 | 〈Inertia Smooth〉— L5 SCROLL の慣性更新頻度を倍増。`scroll-inertia-tick-ms` を `<8>` → `<4>` に変更（125Hz → 250Hz）。慣性スクロール時のフレーム更新が滑らかになり、ゆっくり減衰する局面の段付き感が軽減される。CPU/BLE 負荷は約2倍に増えるが軽微。違和感が出れば `<6>` 〜 `<8>` に戻して再調整する想定。 |
 | 2026-05-01 | 〈Edit Conjure〉— [ Synthesis 03 ] NUM の左手を編集ショートカット用に再配置。⌘A/X/C/V（選択・カット・コピー・ペースト）、⌘Z/Y（Undo/Redo）、^⌥V、⌘↑3、⌘↑4（スクリーンショット）、END を配置。右手のテンキーは現状維持。 |
